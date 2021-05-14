@@ -29,7 +29,7 @@ public class Cuenta {
   public void poner(double cuanto) {
     Validador.validarMontoPositivo(cuanto);
     Validador.validarCantidadMovimientos(this);
-    new Movimiento(LocalDate.now(), cuanto, true).agregateA(this);
+    new Movimiento(LocalDate.now(), cuanto, true).agregateA(this); //TODO
   }
   
   public boolean tieneMasDe3Movimientos(){
@@ -44,8 +44,10 @@ public class Cuenta {
     Validador.validarTopeDeExtraccion(cuanto, this);
     Validador.topeMontoExtraccion( cuanto,this);
 
-    new Movimiento(LocalDate.now(), cuanto, false).agregateA(this);
+    new Movimiento(LocalDate.now(), cuanto, false).agregateA(this);// TODO
   }
+  //Me doy cuenta que hacen lo mismo estas dos lineas. Podria abstraer toda la logica de poner y sacar
+  //en un metodo generico el cual segun si es deposito o extraccion haga el movimiento correspoindiente
 
   public void agregarMovimiento(LocalDate fecha, double cuanto, boolean esDeposito) {
     Movimiento movimiento = new Movimiento(fecha, cuanto, esDeposito);
