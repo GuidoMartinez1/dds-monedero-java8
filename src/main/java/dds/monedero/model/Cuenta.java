@@ -40,18 +40,10 @@ public class Cuenta {
     validadores en una clase validadora.
 */
   public void sacar(double cuanto) {
-    if (cuanto <= 0) {
-      throw new MontoNegativoException(cuanto + ": el monto a ingresar debe ser un valor positivo");
-    }
-    if (getSaldo() - cuanto < 0) {
-      throw new SaldoMenorException("No puede sacar mas de " + getSaldo() + " $");
-    }
-    double montoExtraidoHoy = getMontoExtraidoA(LocalDate.now());
-    double limite = 1000 - montoExtraidoHoy;
-    if (cuanto > limite) {
-      throw new MaximoExtraccionDiarioException("No puede extraer mas de $ " + 1000
-          + " diarios, límite: " + limite);
-    }
+    Validador.validarMontoPositivo(cuanto);
+    Validador.validarTopeDeExtraccion(cuanto, this);
+    Validador.topeMontoExtraccion( cuanto,this);
+
     new Movimiento(LocalDate.now(), cuanto, false).agregateA(this);
   }
 
