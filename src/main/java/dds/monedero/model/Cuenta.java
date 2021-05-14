@@ -14,9 +14,7 @@ public class Cuenta {
   private double saldo = 0;
   private List<Movimiento> movimientos = new ArrayList<>();
 
-  public Cuenta() {
-    //saldo = 0; No se que tan necesario es esto
-  }
+  public Cuenta() {}
 
   public Cuenta(double montoInicial) {
     saldo = montoInicial;
@@ -27,8 +25,7 @@ public class Cuenta {
   }
 
   public void poner(double cuanto) {
-
-    new Movimiento(LocalDate.now(), cuanto, true).agregateA(this); //TODO hay un metodo agregarMovimiento que hace exactamente eso
+    hacerOperacion(cuanto, true);
   }
   
   public boolean tieneMasDe3Movimientos(){
@@ -39,8 +36,7 @@ public class Cuenta {
     validadores en una clase validadora.
 */
   public void sacar(double cuanto) {
-
-    new Movimiento(LocalDate.now(), cuanto, false).agregateA(this);// TODO hay un metodo agregarMovimiento que hace exactamente eso
+    hacerOperacion(cuanto, false);
   }
   //Me doy cuenta que hacen lo mismo estas dos lineas. Podria abstraer toda la logica de poner y sacar
   //en un metodo generico el cual segun si es deposito o extraccion haga el movimiento correspoindiente
@@ -49,7 +45,6 @@ public class Cuenta {
     hacerValidaciones(esDeposito, cuanto);
     modificarSaldo(esDeposito, cuanto);
     agregarMovimiento(LocalDate.now(), cuanto, esDeposito);
-
   }
 
   public void agregarMovimiento(LocalDate fecha, double cuanto, boolean esDeposito) {
@@ -75,7 +70,6 @@ public class Cuenta {
     }
   }
 
-
   public double getMontoExtraidoA(LocalDate fecha) {
     return getMovimientos().stream()
         .filter(movimiento -> !movimiento.isDeposito() && movimiento.getFecha().equals(fecha))
@@ -94,7 +88,5 @@ public class Cuenta {
   public void setSaldo(double saldo) {
     this.saldo = saldo;
   }
-
-
 
 }
