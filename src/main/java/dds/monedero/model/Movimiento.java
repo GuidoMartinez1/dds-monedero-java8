@@ -43,11 +43,12 @@ public class Movimiento {
     return !esDeposito;
   }
 
+  /*
   public void agregateA(Cuenta cuenta) {
     cuenta.setSaldo(calcularValor(cuenta)); //le agrega saldo a la cuenta basicamente
     cuenta.agregarMovimiento(fecha, monto, esDeposito);
   } //ESTE AGREGATE A NO TENDRIA SENTIDO TENERLO, YA QUE TO DO LO QUE HACE ES RESPONSABILIDAD DE LA CUENTA, NO DE LOS MOVIMIENTOS
-
+*/
   public double calcularValor(Cuenta cuenta) {
     if (esDeposito) {
       return cuenta.getSaldo() + getMonto();

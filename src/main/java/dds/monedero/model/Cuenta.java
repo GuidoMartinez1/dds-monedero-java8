@@ -71,6 +71,7 @@ public class Cuenta {
   }
 
   public double getMontoExtraidoA(LocalDate fecha) {
+    //Esta responsabilidad tendria que estar en el movimiento y no en la cuenta
     return getMovimientos().stream()
         .filter(movimiento -> !movimiento.isDeposito() && movimiento.getFecha().equals(fecha))
         .mapToDouble(Movimiento::getMonto)
