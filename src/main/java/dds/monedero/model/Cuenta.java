@@ -27,6 +27,10 @@ public class Cuenta {
   }
 
   public void poner(double cuanto) {
+    // voy a hacer un metodo generico el cual realice tanto la operacion poner como sacar (que recibe el monto y si es una estracion o no)
+    // y adentro delego las validaciones a un validador
+    hacerOperacion(cuanto, false);
+
     if (cuanto <= 0) {
       throw new MontoNegativoException(cuanto + ": el monto a ingresar debe ser un valor positivo");
     }
@@ -37,11 +41,13 @@ public class Cuenta {
 
     new Movimiento(LocalDate.now(), cuanto, true).agregateA(this);
   }
-
+  
   public boolean tieneMasDe3Movimientos(){
       return (getMovimientos().stream().filter(movimiento -> movimiento.isDeposito()).count() >= 3);
   }
-
+/*
+    Los metodos sacar y poner realizan validaciones parecidas a la hora de validar montos
+*/
   public void sacar(double cuanto) {
     if (cuanto <= 0) {
       throw new MontoNegativoException(cuanto + ": el monto a ingresar debe ser un valor positivo");
