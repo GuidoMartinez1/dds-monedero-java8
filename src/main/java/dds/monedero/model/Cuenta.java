@@ -9,6 +9,17 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/*CODE SMELLS
+* 1- Doble inicializacion de saldo.
+* 2- No tiene una buena abstraccion el if de la excepcion de si tiene mas de 3 movimientos
+* 3- El metodo sacar y poner repiten logica, por lo que se tenia que hacer una abstraccion importante.
+* 4- La no existencia de una clase validadora en la cual se trabaje to do lo de los metodos sacar y poner
+* 5- agregarA no tiene sentido que pertenezca a la clase de movimientos. ya que lo mismo lo realiza el metodo getMovimiento()
+* 6- No utilizacion de metodos existentes como esDeFecha e isExtraccion() en el metodo getMontoExtraidoA(fecha)
+*
+*
+* */
+
 public class Cuenta {
 
   private double saldo = 0;
