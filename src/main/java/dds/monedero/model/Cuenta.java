@@ -27,9 +27,8 @@ public class Cuenta {
   }
 
   public void poner(double cuanto) {
-    Validador.validarMontoPositivo(cuanto);
-    Validador.validarCantidadMovimientos(this);
-    new Movimiento(LocalDate.now(), cuanto, true).agregateA(this); //TODO
+
+    new Movimiento(LocalDate.now(), cuanto, true).agregateA(this); //TODO hay un metodo agregarMovimiento que hace exactamente eso
   }
   
   public boolean tieneMasDe3Movimientos(){
@@ -40,19 +39,42 @@ public class Cuenta {
     validadores en una clase validadora.
 */
   public void sacar(double cuanto) {
-    Validador.validarMontoPositivo(cuanto);
-    Validador.validarTopeDeExtraccion(cuanto, this);
-    Validador.topeMontoExtraccion( cuanto,this);
 
-    new Movimiento(LocalDate.now(), cuanto, false).agregateA(this);// TODO
+    new Movimiento(LocalDate.now(), cuanto, false).agregateA(this);// TODO hay un metodo agregarMovimiento que hace exactamente eso
   }
   //Me doy cuenta que hacen lo mismo estas dos lineas. Podria abstraer toda la logica de poner y sacar
   //en un metodo generico el cual segun si es deposito o extraccion haga el movimiento correspoindiente
+
+  public void hacerOperacion(double cuanto, boolean esDeposito){
+    hacerValidaciones(esDeposito, cuanto);
+    modificarSaldo(esDeposito, cuanto);
+    agregarMovimiento(LocalDate.now(), cuanto, esDeposito);
+
+  }
 
   public void agregarMovimiento(LocalDate fecha, double cuanto, boolean esDeposito) {
     Movimiento movimiento = new Movimiento(fecha, cuanto, esDeposito);
     movimientos.add(movimiento);
   }
+
+  public void modificarSaldo(boolean esDeposito, double cuanto){
+    if(esDeposito){
+      saldo += cuanto;
+    }else {
+      saldo -= cuanto;
+    }
+  }
+
+  public void hacerValidaciones(boolean esDeposito, double cuanto){
+    Validador.validarMontoPositivo(cuanto);
+    if(esDeposito){
+      Validador.validarCantidadMovimientos(this);
+    }else{
+      Validador.validarTopeDeExtraccion(cuanto, this);
+      Validador.topeMontoExtraccion( cuanto,this);
+    }
+  }
+
 
   public double getMontoExtraidoA(LocalDate fecha) {
     return getMovimientos().stream()
@@ -72,5 +94,7 @@ public class Cuenta {
   public void setSaldo(double saldo) {
     this.saldo = saldo;
   }
+
+
 
 }
