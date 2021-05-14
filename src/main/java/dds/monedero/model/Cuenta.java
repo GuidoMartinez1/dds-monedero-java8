@@ -72,11 +72,17 @@ public class Cuenta {
 
   public double getMontoExtraidoA(LocalDate fecha) {
     //Esta responsabilidad tendria que estar en el movimiento y no en la cuenta
-    return getMovimientos().stream()
+    /*return getMovimientos().stream()
         .filter(movimiento -> !movimiento.isDeposito() && movimiento.getFecha().equals(fecha))
         .mapToDouble(Movimiento::getMonto)
         .sum();
+    */
+    return getMovimientos().stream()
+            .filter(movimiento -> movimiento.isExtraccion() && movimiento.esDeLaFecha(fecha)) //Aca usé los metodos isExtraccion y esDeLaFecha que los contiene la class Movimiento
+            .mapToDouble(Movimiento::getMonto)
+            .sum();
   }
+
 
   public List<Movimiento> getMovimientos() {
     return movimientos;
