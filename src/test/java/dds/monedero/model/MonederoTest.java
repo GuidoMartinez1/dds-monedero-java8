@@ -25,8 +25,10 @@ public class MonederoTest {
 
   @Test
   void Poner() {
-    cuenta.poner(1500);
-  } //es responsabilidad de una cuenta poner plata?
+    double deposito= 1500;
+    cuenta.poner(deposito);
+    Assertions.assertEquals(cuenta.getSaldo(), deposito);
+  }
 
   @Test
   void PonerMontoNegativo() {
@@ -77,4 +79,36 @@ public class MonederoTest {
     assertThrows(MontoNegativoException.class, () -> cuenta.sacar(-500));
   }
 
+
+
+  @Test
+  void MovimientoDepositadoHoy() {
+    cuenta.poner(100);
+
+    assert cuenta.getMovimientos().get(0).fueDepositado(hoy);
+  }
+
+  @Test
+  void MovimientoExtraidoHoy() {
+    cuenta.setSaldo(1000);
+    cuenta.sacar(100);
+    assert cuenta.getMovimientos().get(0).fueExtraido(hoy);
+  }
+  @Test
+  void extraccionFallidaPorFaltaDeFondos() {
+    cuenta.setSaldo(500);
+    assertThrows(SaldoMenorException.class, () -> cuenta.sacar(700));
+  }
+
+  @Test
+  void pasarElLimiteDeExtraccionDiario() {
+      assertThrows(MaximoExtraccionDiarioException.class, () -> {
+        cuenta.setSaldo(19000);
+        cuenta.sacar(1200);
+      });
+  }
+
+
 }
+
+
