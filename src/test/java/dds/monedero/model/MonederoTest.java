@@ -8,15 +8,19 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class MonederoTest {
   private Cuenta cuenta;
+  private LocalDate hoy;
 
   @BeforeEach
   void init() {
     cuenta = new Cuenta();
+    hoy = LocalDate.now();
   }
 
   @Test
@@ -31,10 +35,15 @@ public class MonederoTest {
 
   @Test
   void TresDepositos() {
-    cuenta.poner(1500);
-    cuenta.poner(456);
-    cuenta.poner(1900);
-    Assertions.assertEquals(cuenta.getSaldo(), 3856.00); // Agrego assert validando que se haya depositado la plata en la cuenta
+    //tendria mas logica que le lleguen 3 depositos
+    double dep1 =1500;
+    double dep2 = 456;
+    double dep3 = 1900;
+    double sumaTotal = dep1 + dep2 + dep3;
+    cuenta.poner(dep1);
+    cuenta.poner(dep2);
+    cuenta.poner(dep3);
+    Assertions.assertEquals(cuenta.getSaldo(), sumaTotal); // Agrego assert validando que se haya depositado la plata en la cuenta
   }
 
   @Test
